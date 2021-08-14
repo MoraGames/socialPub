@@ -1,4 +1,4 @@
-package socialPub
+package main
 
 import (
 	"log"
@@ -6,7 +6,11 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-//Execute this function
+func main() {
+	log.Print(">>> Executing bot code:\n\n")
+	CoreBot()
+}
+
 func CoreBot() {
 	//Get the API_Token
 	botToken, err := GetToken("@MG_Telegram_bot")

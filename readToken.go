@@ -1,4 +1,4 @@
-package socialPub
+package main
 
 import (
 	"fmt"
