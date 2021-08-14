@@ -6,7 +6,8 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-func coreBot() {
+//Execute this function
+func CoreBot() {
 	//Get the API_Token
 	botToken, err := GetToken("@MG_Telegram_bot")
 	if err != nil {
