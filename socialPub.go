@@ -9,12 +9,12 @@ import (
 
 func main() {
 	log.Print(">>> Executing bot code:\n\n")
-	CoreBot()
+	startBot()
 }
 
-func CoreBot() {
+func startBot() {
 	//Get the API_Token
-	botToken, err := GetToken("@MG_Telegram_bot")
+	botToken, err := getToken("@MG_Telegram_bot")
 	if err != nil {
 		log.Panic(err)
 	}
@@ -38,7 +38,11 @@ func CoreBot() {
 	//Run the bot
 	for update := range updatesChannel {
 		if update.Message == nil {
-			//Ignore any non-Message Updates
+			if update.CallbackQuery == nil {
+				//Ignore any non-Message or non-CallbackQuery Updates
+				continue
+			}
+			manageCallbackQuery(update.CallbackQuery)
 			continue
 		}
 
@@ -57,6 +61,7 @@ func CoreBot() {
 			continue
 		}
 		response.Text = "Domanda inviata!"
+		response.BaseChat.ReplyMarkup = standardButtonsMarkup()
 
 		//log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
 
@@ -65,4 +70,8 @@ func CoreBot() {
 
 		botAPI.Send(response)
 	}
+}
+
+func manageCallbackQuery(callbackQuery *tgbotapi.CallbackQuery) {
+	log.Print("\n\n<< CALLBACKQUERY UPDATE >>\n", callbackQuery.Data, "\n\n")
 }

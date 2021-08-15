@@ -10,7 +10,7 @@ var TokensFilePath = "TGBot_APITokens.txt"
 
 //Search for the required bot and return the respective API_Token code.
 //If the bot is not found the function returns an error.
-func GetToken(botUsername string) (string, error) {
+func getToken(botUsername string) (string, error) {
 	//Read the Tokens file
 	fileData, err := ioutil.ReadFile(TokensFilePath)
 	if err != nil {
