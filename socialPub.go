@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"strings"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
@@ -41,11 +42,27 @@ func CoreBot() {
 			continue
 		}
 
-		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+		if update.Message.IsCommand() {
+			switch update.Message.Command() {
+			case "start":
+			case "help":
+			}
+		}
 
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
-		msg.ReplyToMessageID = update.Message.MessageID
+		response := tgbotapi.NewMessage(update.Message.Chat.ID, "")
+		response.ReplyToMessageID = update.Message.MessageID
+		if !strings.Contains(update.Message.Text, "?") {
+			response.Text = "Non stai inviando una domanda! Rispondi ad una domanda ricevuta o formula una domanda?"
+			botAPI.Send(response)
+			continue
+		}
+		response.Text = "Domanda inviata!"
 
-		botAPI.Send(msg)
+		//log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+
+		//msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		//msg.ReplyToMessageID = update.Message.MessageID
+
+		botAPI.Send(response)
 	}
 }
