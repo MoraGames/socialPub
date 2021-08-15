@@ -17,6 +17,7 @@ func CoreBot() {
 	if err != nil {
 		log.Panic(err)
 	}
+	log.Print(">> Token:", botToken, "\n\n")
 
 	//Get the botAPI object
 	botAPI, err := tgbotapi.NewBotAPI(botToken)
